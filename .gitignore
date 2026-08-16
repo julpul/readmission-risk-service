@@ -16,3 +16,7 @@ build/
 
 # OS
 .DS_Store
+
+
+#data
+data/
