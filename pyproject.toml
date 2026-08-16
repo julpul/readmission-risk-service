@@ -7,7 +7,11 @@ authors = [
     { name = "Julian Pulawski", email = "s31873@pjwstk.edu.pl" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "pandas>=3.0.5",
+    "pandera>=0.32.1",
+    "seaborn>=0.13.2",
+]
 
 [project.scripts]
 readmission-risk-service = "readmission_risk_service:main"
@@ -18,6 +22,17 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "ipykernel>=7.3.0",
     "pytest>=9.1.1",
     "ruff>=0.16.1",
 ]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/*.ipynb" = ["E402", "E501", "B018"]

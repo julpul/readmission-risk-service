@@ -1,31 +1,39 @@
-name: CI_smoke
+name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  lint-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
 
-      - name: setup uv
-        uses: astral-sh/setup-uv@v9
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v6
         with:
           version: 'latest'
           enable-cache: true
 
       - name: Install dependencies
-        run: |
-          uv sync --group dev
+        run: uv sync --group dev --frozen
 
-      - name: lint
-        run: |
-          uv run ruff check .
+      - name: Lint
+        run: uv run ruff check --output-format=github .
 
-      - name: test
-        run: |
-          uv run pytest
+      - name: Format check
+        run: uv run ruff format --check .
+
+      - name: Test
+        run: uv run pytest
