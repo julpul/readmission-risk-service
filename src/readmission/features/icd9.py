@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.base import BaseEstimator, TransformerMixin
 
 ICD9_GROUPS = {
     "circulatory":     [(390, 459), (785, 785)],
@@ -13,7 +14,7 @@ DIABETES_PREFIX = "250"
 
 
 def map_icd9_to_group(code: str | float | None) -> str:
-    if code is None or pd.isna(code) or code:
+    if code is None or pd.isna(code):
         return "other"
 
     text = str(code).strip()
@@ -39,17 +40,16 @@ def map_icd9_to_group(code: str | float | None) -> str:
     return "other"
 
 class Icd9GroupTransformer(BaseEstimator, TransformerMixin):
-    def __init__(self, columns = ("diag_1","diag_2","diag_3"), drop_original: bool = True):
+    def __init__(self, columns = ("diag_1","diag_2","diag_3")):
         self.columns = columns
-        self.drop_original = drop_original
 
-    def fit(self,X,y):
+    def fit(self,X,y=None):
         return self
 
     def transform(self,X):
         X = X.copy()
         for col in self.columns:
             X[col] = X[col].map(map_icd9_to_group)
+
         return X
 
- 

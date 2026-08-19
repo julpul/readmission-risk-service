@@ -1,0 +1,26 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+
+  // Pylance: "standard" lapie nieuzyte importy, zle typy i nieistniejace nazwy.
+  // "basic" jesli bedzie za glosny, "strict" gdy zechcesz pelnej dyscypliny.
+  "python.analysis.typeCheckingMode": "standard",
+  "python.analysis.autoImportCompletions": true,
+
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+
+  "ruff.importStrategy": "fromEnvironment",
+
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": ["tests"],
+
+  "notebook.formatOnSave.enabled": false,
+  "files.trimTrailingWhitespace": true
+}

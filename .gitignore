@@ -19,4 +19,6 @@ build/
 
 
 #data
-data/
+/data/
+/scripts/
+/docs/features_notes.md
