@@ -9,6 +9,7 @@ from readmission.data.schema import CohortSchema, RawSchema
 def drop_deceased_and_hospice(df: pd.DataFrame) -> pd.DataFrame:
     return df.loc[~df["discharge_disposition_id"].isin(DEAD_OR_HOSPICE)].copy()
 
+
 def duplicate_patients(df: pd.DataFrame, strategy: str) -> pd.DataFrame:
     if strategy == "first":
         return df.sort_values("encounter_id").drop_duplicates("patient_nbr", keep="first")
@@ -16,8 +17,10 @@ def duplicate_patients(df: pd.DataFrame, strategy: str) -> pd.DataFrame:
         return df
     raise ValueError(f"unknown strategy: {strategy!r}")
 
+
 def make_target(df: pd.DataFrame) -> pd.Series:
     return (df["readmitted"] == "<30").astype(int)
+
 
 @pa.check_types
 def build_cohort(df: DataFrame[RawSchema]) -> DataFrame[CohortSchema]:

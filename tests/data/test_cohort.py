@@ -6,14 +6,16 @@ from readmission.data import drop_deceased_and_hospice, duplicate_patients, make
 
 @pytest.fixture
 def raw_df():
-    return pd.DataFrame({
-        "encounter_id":             [1, 2, 3, 4, 5],
-        "patient_nbr":              [100, 100, 200, 300, 400],
-        "age":                      ["[70-80)"] * 5,
-        "time_in_hospital":         [3, 5, 2, 1, 8],
-        "discharge_disposition_id": [1, 1, 11, 6, 13],
-        "readmitted":               ["<30", "NO", "NO", ">30", "<30"],
-    })
+    return pd.DataFrame(
+        {
+            "encounter_id": [1, 2, 3, 4, 5],
+            "patient_nbr": [100, 100, 200, 300, 400],
+            "age": ["[70-80)"] * 5,
+            "time_in_hospital": [3, 5, 2, 1, 8],
+            "discharge_disposition_id": [1, 1, 11, 6, 13],
+            "readmitted": ["<30", "NO", "NO", ">30", "<30"],
+        }
+    )
 
 
 def test_deaths_out(raw_df):
