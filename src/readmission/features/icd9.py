@@ -2,13 +2,13 @@ import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
 
 ICD9_GROUPS = {
-    "circulatory":     [(390, 459), (785, 785)],
-    "respiratory":     [(460, 519), (786, 786)],
-    "digestive":       [(520, 579), (787, 787)],
-    "genitourinary":   [(580, 629), (788, 788)],
-    "neoplasms":       [(140, 239)],
+    "circulatory": [(390, 459), (785, 785)],
+    "respiratory": [(460, 519), (786, 786)],
+    "digestive": [(520, 579), (787, 787)],
+    "genitourinary": [(580, 629), (788, 788)],
+    "neoplasms": [(140, 239)],
     "musculoskeletal": [(710, 739)],
-    "injury":          [(800, 999)],
+    "injury": [(800, 999)],
 }
 DIABETES_PREFIX = "250"
 
@@ -39,17 +39,17 @@ def map_icd9_to_group(code: str | float | None) -> str:
 
     return "other"
 
+
 class Icd9GroupTransformer(BaseEstimator, TransformerMixin):
-    def __init__(self, columns = ("diag_1","diag_2","diag_3")):
+    def __init__(self, columns=("diag_1", "diag_2", "diag_3")):
         self.columns = columns
 
-    def fit(self,X,y=None):
+    def fit(self, X, y=None):
         return self
 
-    def transform(self,X):
+    def transform(self, X):
         X = X.copy()
         for col in self.columns:
             X[col] = X[col].map(map_icd9_to_group)
 
         return X
-

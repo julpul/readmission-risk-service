@@ -4,13 +4,14 @@ MEDICATION_VALUES = ["No", "Steady", "Up", "Down"]
 
 
 class AgeTransformer(BaseEstimator, TransformerMixin):
-
-    def __init__(self, column: str = "age", output_column: str = "age_class", drop_original: bool = True):
+    def __init__(
+        self, column: str = "age", output_column: str = "age_class", drop_original: bool = True
+    ):
         self.column = column
         self.output_column = output_column
         self.drop_original = drop_original
 
-    def fit(self, X,y=None):
+    def fit(self, X, y=None):
         return self
 
     def transform(self, X):
@@ -21,6 +22,7 @@ class AgeTransformer(BaseEstimator, TransformerMixin):
             X = X.drop(columns=[self.column])
         return X
 
+
 class MedicationCountTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, columns=None, drop_original: bool = False):
         self.columns = columns
@@ -28,9 +30,11 @@ class MedicationCountTransformer(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         if not self.columns:
-            self.columns_ = [col for col in X.columns
-                if set(X[col].dropna().unique()) <= set(MEDICATION_VALUES)]
-        else:  self.columns_ = list(self.columns)
+            self.columns_ = [
+                col for col in X.columns if set(X[col].dropna().unique()) <= set(MEDICATION_VALUES)
+            ]
+        else:
+            self.columns_ = list(self.columns)
         return self
 
     def transform(self, X):
