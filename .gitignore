@@ -22,3 +22,6 @@ build/
 /data/
 /scripts/
 /docs/features_notes.md
+/notebooks/learning_scikitlearn.ipynb
+/notebooks/learning_data/
+/artifacts/
